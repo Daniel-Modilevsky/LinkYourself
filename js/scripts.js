@@ -1,31 +1,106 @@
-var firstName = "Daniel";
-var lastName = "Modilevsky";
-var size = firstName.length * lastName.length;
+//-------------------------JQUERY--------------------------
+$(document).ready(function () {
 
-function init() {
-    var articles = "";
-    for (var i = 0; i < size; i++)
-        articles += "<article></article> ";
-    var main = document.getElementById("main-3").innerHTML = articles;
-    firstArticle = document.getElementsByTagName("article")[0];
+    var actualSlide = 0;
+    var totalSlides = $("#carousel .content").length;
+    var gap = 100 / totalSlides;
+    var lastSlide = $("#carousel .content").length - 1;
 
-    firstArticle.onmouseover = function () {
-        firstArticle.style.backgroundColor = "#506270";
-        firstArticle.style.color = "#f9f9f9";
-        firstArticle.innerHTML = firstName[0];
+    $("#carousel").css("width", (100 * totalSlides) + "%");
+    $("#carouselController .button:eq(" + actualSlide + ")").addClass("active");
+
+    var slide = function () {
+
+        if (actualSlide >= totalSlides)
+            actualSlide = 0;
+
+        $("#carouselController .button").removeClass("active");
+        $("#carouselController .button:eq(" + actualSlide + ")").addClass("active");
+
+        for (var i = 0; i < totalSlides; i++) {
+
+            if (actualSlide != totalSlides)
+                $("#carousel .content:eq(" + i + ")").css(
+                    "left", ((gap * actualSlide) * -1) + "%"
+                );
+            else
+                $("#carousel .content:eq(" + i + ")").css(
+                    "left", "0%"
+                );
+        }
     }
 
-    firstArticle.onmouseout = function () {
-        firstArticle.style.backgroundColor = "#f9f9f9";
+    $("#carouselController .button").on("click", function () {
+        actualSlide = $(this).index();
+        slide();
+    });
+
+    window.setInterval(function () {
+        if (!$("#carouselContainer").is(':hover')) {
+            actualSlide += 1;
+            slide();
+        }
+    }, 5000); // override the default duration here
+
+});
+
+/*-----------------------------List------------------------------*/
+
+
+function listInit() {
+    var myList = "";
+    var cards = 6;
+    var textList = ["CSS card hover effect", "3D images slideshow", "CSS grid list", "Flexbox Froggy", "Responsive cards section", "CSS clip path marker"];
+
+    for (i = 0; i < cards; i++) {
+        myList += '<article class="card' + (i + 1) + '"><section class="upperImg"></section><section class="leftImg"></section><section class="rightImg"></section></article>';
     }
 
-    document.getElementById("colorBtn").onclick = function () {
-        for (var i = 0; i < firstName.length; i++)
-            document.getElementsByTagName("article")[i].style.backgroundColor = "#506270";
-    }
-
-    document.getElementById("reColorBtn").onclick = function () {
-        for (var i = 0; i < firstName.length; i++)
-            document.getElementsByTagName("article")[i].style.backgroundColor = "#f9f9f9";
-    }
+    document.getElementById("mainList").innerHTML = myList;
 }
+
+$(document).ready(function () {
+    $(".card1").click(function () {
+        window.open('https://www.youtube.com/results?search_query=css+card+hover+effects', '_blank');
+    });
+});
+$(document).ready(function () {
+    $(".card2").click(function () {
+        window.open('https://www.youtube.com/results?search_query=3d+gallery+slideshow', '_blank');
+    });
+});
+$(document).ready(function () {
+    $(".card3").click(function () {
+        window.open('https://www.youtube.com/results?search_query=css+grid+list', '_blank');
+    });
+});
+$(document).ready(function () {
+    $(".card4").click(function () {
+        window.open('https://flexboxfroggy.com', '_blank');
+    });
+});
+$(document).ready(function () {
+    $(".card5").click(function () {
+        window.open('https://www.youtube.com/results?search_query=responsive+cards+section', '_blank');
+    });
+});
+$(document).ready(function () {
+    $(".card6").click(function () {
+        window.open('https://bennettfeely.com/clippy/', '_blank');
+    });
+});
+
+
+
+/*-----------------------------End List--------------------------*/
+$(document).ready(function () {
+    $(".menu").click(function () {
+        $(".sidebar").toggle();
+    });
+});
+//-------------------------Form-------------------------------
+$(document).ready(function () {
+    $("#submit-button").click(function () {
+        window.location.href = 'List.html';
+    });
+});
